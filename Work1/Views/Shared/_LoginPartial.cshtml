@@ -1,0 +1,69 @@
+﻿@model Work1.Models.LineProfile
+
+@{
+    Boolean bLogin = Session["LineProfile"] != null;
+    Work1.Models.LineProfile ProfileObj = ViewBag.UserProfile as Work1.Models.LineProfile;
+}
+
+@if (bLogin && ProfileObj!=null)
+{
+<div class="nav navbar-nav navbar-right">
+    @if (ViewBag.access_token == null)
+    {
+        <a class="btn text-white font-weight-bold btn-line" href='@Url.Action("Notify", "Home")'>
+            <img style="padding: 1px;" src="@Url.Content("~/Images/line_32.png")">
+            <span class="text-line" style="color:white;">訂閱LINE Notify通知</span>
+        </a>
+    }
+    else
+    {
+        <a class="btn text-white font-weight-bold btn-line" href='@Url.Action("Revoke", "Home")'>
+            <img style="padding: 1px;" src="@Url.Content("~/Images/line_32.png")">
+            <span class="text-line" style="color:white;">取消LINE Notify通知</span>
+        </a>
+    }
+
+
+    <img style="padding: 1px;width:30px;" src="@ProfileObj.pictureUrl" />
+    <text style="color:white;">
+        @ProfileObj.displayName
+    </text>
+
+    <a class="btn text-white font-weight-bold btn-line" href='@Url.Action("Logout", "Home")'>
+        <img style="padding: 1px;" src="@Url.Content("~/Images/line_32.png")">
+        <span class="text-line" style="color:white;">登出</span>
+    </a>
+</div>
+
+}
+else
+{
+    <div class="nav navbar-nav navbar-right">
+        <a class="btn text-white font-weight-bold btn-line" href='@Url.Action("Login", "Home")'>
+            <img style="padding: 1px;" src="@Url.Content("~/Images/line_32.png")">
+            <span class="text-line" style="color:white;">LINE帳號登入</span>
+        </a>
+    </div>
+}
+
+
+<style>
+    .btn-line {
+        padding: 0;
+        background: #06C755;
+        margin-top: 8px;
+    }
+
+        .btn-line:hover {
+            background: #05b34c;
+        }
+
+        .btn-line:active {
+            background: #048b3b;
+        }
+
+    .text-line {
+        font-size: 11px;
+        padding: 16px 32px !important;
+    }
+</style>

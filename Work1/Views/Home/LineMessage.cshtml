@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "下面輸入訊息";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+        $(document).ready(function () {
+
+            (function ($) {
+                $.fn.toggleDisabled = function () {
+                    return this.each(function () {
+                        this.disabled = !this.disabled;
+                    });
+                };
+            })(jQuery);
+
+            $('#submitMsg').click(function () {
+
+                //失效按鈕 避免連點
+                $(":submitMsg").toggleDisabled();
+
+                var actionUrl = "LineMessage?Msg=" + $('#myMsg').val();
+
+                $.post(actionUrl, function (data) {
+                    alert('傳送成功');
+                    $(":submitMsg").toggleDisabled();
+                })
+                .fail(function () {
+                    alert("something wrong...");
+                })
+            });
+        })
+</script>
+
+<div>
+    <input type="text" class="form-control" id="myMsg" value="@ViewBag.Msg" placeholder="請輸入內容" autofocus="autofocus">
+    <br />
+    <button type="submit" id="submitMsg" class="btn btn-primary btn-sm btn-margin">送出</button>
+</div>
+
